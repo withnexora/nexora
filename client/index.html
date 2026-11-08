@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="/site-motion-footer.css" />
     <link rel="stylesheet" href="/full-screen-surfaces.css" />
     <link rel="stylesheet" href="/liquid-global-polish.css" />
+    <link rel="stylesheet" href="/payment-workspace.css" />
   </head>
   <body class="liquid-page">
     <a class="skip-link" href="#products" data-i18n="skipCatalog">Đi tới danh sách sản phẩm</a>
@@ -314,20 +315,32 @@
     <section class="modal qr-modal-fullscreen" id="qrModal" role="dialog" aria-modal="true" aria-labelledby="qrTitle" hidden>
       <div class="modal-card qr-card liquid liquid-surface">
         <button class="close-button" data-close="qr" type="button" aria-label="Đóng"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-        <ol class="checkout-progress payment-progress" id="paymentProgress" aria-label="Tiến trình thanh toán"><li class="is-complete" data-checkout-step="1"><span>01</span><strong>Giỏ hàng</strong></li><li class="is-complete" data-checkout-step="2"><span>02</span><strong>Giao nhận</strong></li><li class="is-active" data-checkout-step="3"><span>03</span><strong>Thanh toán</strong></li></ol>
-        <div class="payment-confirm"><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="orderCreated">ĐƠN HÀNG ĐÃ ĐƯỢC TẠO</span></div>
-        <h2 id="qrTitle" data-i18n-html="qrHeading">Quét mã để<br /><em>hoàn tất thanh toán.</em></h2>
-        <p>Đơn <strong id="qrOrderNumber">NXR-000000</strong> đang chờ xác nhận thanh toán.</p>
-        <div class="payment-tabs"><button class="active" data-payment-method="auto_transfer" type="button"><i class="fa-solid fa-bolt" aria-hidden="true"></i> CK tự động</button><button data-payment-method="e_wallet" type="button"><i class="fa-solid fa-wallet" aria-hidden="true"></i> Ví điện tử</button><button data-payment-method="vietqr" type="button">VietQR thủ công</button><button data-payment-method="wallet" type="button">Số dư NEXORA</button></div>
-        <div class="e-wallet-panel" id="eWalletPanel" hidden><span class="panel-label">CHỌN VÍ ĐIỆN TỬ</span><div class="e-wallet-provider-buttons" id="eWalletProviderButtons"><button type="button" data-ewallet-provider="momo" class="active"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i> MoMo</button><button type="button" data-ewallet-provider="zalopay"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> ZaloPay</button></div><small>MoMo và ZaloPay được quản lý chung trong nhóm Ví điện tử. Kiểm tra đúng số tiền và mã đơn trước khi thanh toán.</small></div>
-        <div class="qr-image-wrap"><img id="qrImage" src="" alt="Mã QR thanh toán" /><div class="qr-state" id="qrState" role="status" hidden><i class="fa-solid fa-qrcode" aria-hidden="true"></i><strong>Chưa thể tạo QR</strong><span id="qrStateMessage">Cần cấu hình phương thức nhận tiền trong app.js.</span></div><span class="qr-corner top-left"></span><span class="qr-corner top-right"></span><span class="qr-corner bottom-left"></span><span class="qr-corner bottom-right"></span></div>
-        <div class="zalopay-copy-actions" id="zalopayCopyActions" aria-label="Thao tác sao chép thanh toán ZaloPay" hidden>
-          <button id="copyZaloPayTransferContent" type="button"><i class="fa-regular fa-copy" aria-hidden="true"></i> Sao chép nội dung chuyển khoản</button>
-          <button id="copyZaloPayAccountNumber" type="button"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Sao chép số tài khoản</button>
+        <div class="payment-workspace">
+          <aside class="payment-order-rail" aria-label="Tóm tắt đơn hàng">
+            <div class="payment-rail-brand"><span class="payment-rail-mark"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span><span>NEXORA <small>PAYMENT DESK</small></span></div>
+            <div class="payment-rail-status"><span class="payment-status-dot"></span><span>Đơn hàng đang chờ thanh toán</span></div>
+            <div class="payment-rail-order"><span>MÃ ĐƠN HÀNG</span><strong id="paymentRailOrder">NXR-000000</strong><button type="button" class="payment-rail-copy" id="copyPaymentOrder" data-copy-value="NXR-000000"><i class="fa-regular fa-copy" aria-hidden="true"></i><span>Sao chép</span></button></div>
+            <div class="payment-rail-total"><span>TỔNG THANH TOÁN</span><strong id="paymentRailTotal">0đ</strong><small>Giá đã bao gồm ưu đãi hiện tại</small></div>
+            <ol class="payment-rail-steps" aria-label="Trạng thái đơn hàng"><li class="is-done"><span><i class="fa-solid fa-check" aria-hidden="true"></i></span><div><strong>Đơn hàng đã tạo</strong><small>Thông tin đã được ghi nhận</small></div></li><li class="is-current"><span>2</span><div><strong>Chờ thanh toán</strong><small>Chọn phương thức bên phải</small></div></li><li><span>3</span><div><strong>Shop xác nhận</strong><small>Tự động sau khi đối soát</small></div></li></ol>
+            <p class="payment-rail-help"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Thanh toán an toàn. Không chia sẻ mã OTP hoặc mật khẩu cho bất kỳ ai.</p>
+          </aside>
+          <div class="payment-main-stage">
+            <ol class="checkout-progress payment-progress" id="paymentProgress" aria-label="Tiến trình thanh toán"><li class="is-complete" data-checkout-step="1"><span>01</span><strong>Giỏ hàng</strong></li><li class="is-complete" data-checkout-step="2"><span>02</span><strong>Giao nhận</strong></li><li class="is-active" data-checkout-step="3"><span>03</span><strong>Thanh toán</strong></li></ol>
+            <div class="payment-confirm"><i class="fa-solid fa-check" aria-hidden="true"></i><span data-i18n="orderCreated">ĐƠN HÀNG ĐÃ ĐƯỢC TẠO</span></div>
+            <h2 id="qrTitle" data-i18n-html="qrHeading">Quét mã để<br /><em>hoàn tất thanh toán.</em></h2>
+            <p>Đơn <strong id="qrOrderNumber">NXR-000000</strong> đang chờ xác nhận thanh toán.</p>
+            <div class="payment-tabs"><button class="active" data-payment-method="auto_transfer" type="button"><i class="fa-solid fa-bolt" aria-hidden="true"></i> CK tự động</button><button data-payment-method="e_wallet" type="button"><i class="fa-solid fa-wallet" aria-hidden="true"></i> Ví điện tử</button><button data-payment-method="vietqr" type="button">VietQR thủ công</button><button data-payment-method="wallet" type="button">Số dư NEXORA</button></div>
+            <div class="e-wallet-panel" id="eWalletPanel" hidden><span class="panel-label">CHỌN VÍ ĐIỆN TỬ</span><div class="e-wallet-provider-buttons" id="eWalletProviderButtons"><button type="button" data-ewallet-provider="momo" class="active"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i> MoMo</button><button type="button" data-ewallet-provider="zalopay"><i class="fa-solid fa-comment-dots" aria-hidden="true"></i> ZaloPay</button></div><small>MoMo và ZaloPay được quản lý chung trong nhóm Ví điện tử. Kiểm tra đúng số tiền và mã đơn trước khi thanh toán.</small></div>
+            <div class="qr-image-wrap"><img id="qrImage" src="" alt="Mã QR thanh toán" /><div class="qr-state" id="qrState" role="status" hidden><i class="fa-solid fa-qrcode" aria-hidden="true"></i><strong>Chưa thể tạo QR</strong><span id="qrStateMessage">Cần cấu hình phương thức nhận tiền trong app.js.</span></div><span class="qr-corner top-left"></span><span class="qr-corner top-right"></span><span class="qr-corner bottom-left"></span><span class="qr-corner bottom-right"></span></div>
+            <div class="zalopay-copy-actions" id="zalopayCopyActions" aria-label="Thao tác sao chép thanh toán ZaloPay" hidden>
+              <button id="copyZaloPayTransferContent" type="button"><i class="fa-regular fa-copy" aria-hidden="true"></i> Sao chép nội dung chuyển khoản</button>
+              <button id="copyZaloPayAccountNumber" type="button"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Sao chép số tài khoản</button>
+            </div>
+            <div class="payment-info"><div><span>Số tiền</span><strong id="qrTotal">0đ</strong></div><div><span>Nội dung</span><strong id="qrContent">NXR-000000</strong></div></div>
+            <p class="payment-instruction" id="paymentInstruction">Mở ứng dụng ngân hàng, quét VietQR và kiểm tra đúng số tiền trước khi xác nhận.</p>
+            <aside class="auto-transfer-notice" id="autoTransferNotice" role="status" hidden><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><div><strong id="autoTransferNoticeTitle">Đang tự đối soát</strong><p id="autoTransferNoticeText">Sau khi tiền vào, hệ thống tự đối soát mã đơn và số tiền. Bạn không cần nhắn shop.</p></div></aside>
+          </div>
         </div>
-        <div class="payment-info"><div><span>Số tiền</span><strong id="qrTotal">0đ</strong></div><div><span>Nội dung</span><strong id="qrContent">NXR-000000</strong></div></div>
-        <p class="payment-instruction" id="paymentInstruction">Mở ứng dụng ngân hàng, quét VietQR và kiểm tra đúng số tiền trước khi xác nhận.</p>
-        <aside class="auto-transfer-notice" id="autoTransferNotice" role="status" hidden><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><div><strong id="autoTransferNoticeTitle">Đang tự đối soát</strong><p id="autoTransferNoticeText">Sau khi tiền vào, hệ thống tự đối soát mã đơn và số tiền. Bạn không cần nhắn shop.</p></div></aside>
         <section class="zalopay-scan-guide" id="zalopayScanGuide" aria-live="polite" hidden>
           <div class="zalopay-guide-heading"><i class="fa-solid fa-qrcode" aria-hidden="true"></i><div><strong>Quét QR ZaloPay</strong><span>Ví điện tử thủ công — shop sẽ đối soát trước khi duyệt đơn.</span></div></div>
           <ol>
