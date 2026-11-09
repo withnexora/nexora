@@ -5,6 +5,9 @@
 .footer-quick-links a i { width: 1rem; color: var(--cyan); }
 .footer-signal.is-offline { color: #f2a7b1; }
 .footer-signal.is-offline i { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+.footer-credit-fixed { color: #7992aa; white-space: nowrap; }
+.footer-credit-fixed a { color: #9be7ff; font-weight: 700; text-decoration: none; }
+.footer-credit-fixed a:hover, .footer-credit-fixed a:focus-visible { color: #ffffff; text-decoration: underline; }
 
 @media (min-width: 721px) {
   .footer-main { grid-template-columns: 1.35fr .6fr .9fr .8fr .95fr; }
@@ -48,4 +51,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .footer-signal i { animation: none !important; }
+}
+
+@media (max-width: 720px) {
+  .footer-credit-fixed { order: 3; width: 100%; }
 }

@@ -59,6 +59,8 @@ a { color: inherit; }
 .status-row:last-of-type { border-bottom: 0; }
 .mantis-view[hidden] { display: none !important; }
 .mantis-footer { line-height: 1.5; }
+.nexora-contributes-link { color: inherit; font-weight: 700; text-decoration: none; }
+.nexora-contributes-link:hover, .nexora-contributes-link:focus-visible { color: var(--mantis-primary, #0d6efd); text-decoration: underline; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
