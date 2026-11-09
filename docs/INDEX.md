@@ -19,6 +19,7 @@ Tài liệu này là điểm bắt đầu để tra cứu mã nguồn, vận hà
 | PayOS.vn song ngữ | [PayOS Setup Bilingual](PAYOS_SETUP_BILINGUAL.md) | Cấu hình PayOS server-side, secret environment, checkout URL, webhook xác minh chữ ký, sandbox và xử lý sự cố bằng tiếng Việt và tiếng Anh. |
 | Upload ảnh Admin | [Supabase Storage Setup](SUPABASE_STORAGE_SETUP.md) | Tạo bucket `nexora-brand-assets`, áp dụng policy theo capability, kiểm thử public URL và cấu hình Render. |
 | Environment Render | [Render Environment Setup](RENDER_ENV_SETUP_BILINGUAL.md) | Blueprint Web Service, Build/Start command, `/healthz`, biến `VITE_*`, Supabase, PayOS và troubleshooting song ngữ. |
+| Mẫu environment | [Environment Template Bilingual](ENV_TEMPLATE_BILINGUAL.md) | Danh sách tập trung cho `.env.example`: Supabase, runtime, PayOS, webhook, email, OAuth và database. |
 | Hệ thống “Ghi sau” | [Deferred Work Bilingual](DEFERRED_WORK_BILINGUAL.md) | Quy ước ghi nhận yêu cầu trì hoãn, trạng thái backlog, capability `deferredWork`, RLS và quy trình chuyển sang triển khai. |
 | Kết nối/cài đặt cơ sở dữ liệu | [Hướng dẫn Supabase](SUPABASE.md) | Schema canonical 25 bảng, RLS, quy trình áp dụng một lần và xác minh. |
 | Vận hành tài khoản và số dư | [Account & Wallet](ACCOUNT_WALLET.md) | Sổ cái, nạp tiền Zalo, quản trị khách, RLS và quy trình đối soát. |
@@ -31,7 +32,7 @@ Tài liệu này là điểm bắt đầu để tra cứu mã nguồn, vận hà
 | Xem kết quả kiểm tra UI | [Verification Notes](VERIFICATION_NOTES.md) | Ghi nhận kiểm tra Command Deck trước phát hành. |
 | Quy ước SQL | [Ghi chú schema](LEGACY_MIGRATIONS.md) | Repository chỉ giữ một schema canonical duy nhất. |
 
-> **Lộ trình dành cho người mới:** đọc [Hướng dẫn tiếng Việt](HUONG_DAN_A_Z.md) hoặc [English Deployment Guide](DEPLOYMENT_GUIDE_EN.md), áp dụng `supabase-unified.sql`, cấu hình `client/supabase-config.js`, chạy test/build, rồi làm theo Thiết lập admin.
+> **Lộ trình dành cho người mới:** đọc [Hướng dẫn tiếng Việt](HUONG_DAN_A_Z.md) hoặc [English Deployment Guide](DEPLOYMENT_GUIDE_EN.md), copy `.env.example` thành `.env`, áp dụng `supabase-unified.sql`, chạy test/build, rồi làm theo Thiết lập admin.
 
 ## Quy ước nguồn chuẩn
 

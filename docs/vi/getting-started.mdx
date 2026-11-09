@@ -16,10 +16,11 @@ Node.js 20+, pnpm, Git và một project Supabase. Không commit `.env`, service
 ```bash
 git clone https://github.com/minhduc290613/tech-ecommerce-store.git
 cd tech-ecommerce-store
+cp .env.example .env
 pnpm install
 ```
 
-Điền URL project và publishable/anon key trong `client/supabase-config.js`, sau đó chạy schema `supabase-unified.sql` trên database mới/trống.
+Mọi cấu hình cần thay khi clone nằm trong `.env.example`; copy thành `.env` rồi chỉnh các biến tương ứng. Frontend đọc `VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY`; backend/payment đọc `SUPABASE_URL` và các secret server. Không sửa `client/supabase-config.js` và không commit `.env`. Sau đó chạy schema `supabase-unified.sql` trên database mới/trống.
 
 ```bash
 pnpm dev

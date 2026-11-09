@@ -4,6 +4,8 @@
 
 NEXORA chạy trên Render dưới dạng **Web Service Node.js**, không phải Static Site, vì cần Express xử lý tRPC, Supabase server calls, PayOS webhook và các endpoint thanh toán. Repository đã có `render.yaml` với build command, start command, health check và danh sách biến môi trường.
 
+Mẫu cấu hình tập trung nằm ở file `.env.example` trong repository. Dùng file này làm checklist khi chạy local hoặc nhập Environment Variables trên Render; không commit `.env` và không dán secret vào source code.
+
 > NEXORA requires a **Node.js Web Service** on Render rather than a Static Site because Express handles tRPC, server-side Supabase calls, PayOS webhooks, and payment endpoints. The repository now includes `render.yaml` with the production commands, health check, and environment variable inventory.
 
 ## 1. Tạo service từ Blueprint
@@ -39,8 +41,20 @@ Không dùng Static Site cho bản đầy đủ có server. Static Site chỉ ph
 | `SUPABASE_URL` | Có khi dùng server/payment | Supabase URL cho backend. |
 | `SUPABASE_SERVICE_ROLE_KEY` | Có khi bật PayOS/webhook server | Backend-only key để đối soát và cập nhật đơn. Không đưa vào frontend. |
 | `PUBLIC_SITE_URL` | Có khi bật PayOS | URL public hiện tại, ví dụ `https://your-service.onrender.com`. Không có dấu `/` cuối. |
+| `EMAIL_FROM_ADDRESS` | Có khi bật email giao dịch | Địa chỉ sender đã xác minh. |
 
-`VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY` được đọc lúc build. Sau khi thay đổi hai biến này, phải **Manual Deploy → Deploy latest commit** để Vite bundle lại frontend.
+SMTP/API email là tùy chọn:
+
+```env
+RESEND_API_KEY=...
+SMTP_HOST=...
+SMTP_PORT=587
+SMTP_USERNAME=...
+SMTP_PASSWORD=...
+EMAIL_FROM_ADDRESS=no-reply@example.com
+```
+
+`VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY` được đọc lúc build. Sau khi thay đổi hai biến này, phải **Manual Deploy → Deploy latest commit** để Vite bundle lại frontend. Khi chạy local, copy `cp .env.example .env`; không sửa `client/supabase-config.js`.
 
 ## 3. PayOS và thanh toán tự động
 

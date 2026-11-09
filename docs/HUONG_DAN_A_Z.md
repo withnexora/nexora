@@ -67,6 +67,7 @@ Thay placeholder bằng repository của bạn:
 ```bash
 git clone https://github.com/minhduc290613/tech-ecommerce-store.git
 cd tech-ecommerce-store
+cp .env.example .env
 ```
 
 Nếu repository đã có source local:
@@ -114,14 +115,15 @@ Project hiện không cần `pnpm preview`; hãy dùng `pnpm start` để kiểm
 
 Tạo project tại [Supabase Dashboard](https://supabase.com/dashboard), vào **Project Settings → API Keys** và lấy Project URL cùng Publishable key. Với project cũ, legacy anon key vẫn có thể dùng trong frontend nếu RLS được cấu hình đúng. Supabase khuyến nghị dùng publishable key mới cho component public và chỉ dùng secret key ở backend được bảo vệ [1].
 
-Mở `client/supabase-config.js` và thay placeholder:
+Mở `.env` (được tạo từ `.env.example`) và cập nhật cấu hình:
 
-```js
-export const SUPABASE_URL = "Thay bằng supabase url của bạn (có thể bạn sé thấy cái url nào đó vì đằng admin đi test nhưng up ko xóa đi)";
-export const SUPABASE_ANON_KEY = "Thay bằng supabase anon key của bạn (có thể bạn sé thấy cái key nào đó vì đằng admin đi test nhưng up ko xóa đi)";
+```dotenv
+VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_your_public_key
+SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
 ```
 
-Không đặt `sb_secret_...`, `service_role`, SMTP password hoặc JWT secret vào file này. File này được bundle vào browser.
+`client/supabase-config.js` chỉ đọc ba biến trên, không còn chứa URL/key fallback. Không đặt `sb_secret_...`, `service_role`, SMTP password hoặc JWT secret vào biến `VITE_*`; file `.env` không được commit và secret server phải đặt trên hosting/backend.
 
 ### 5.2 Áp dụng database schema
 
@@ -156,7 +158,7 @@ CK tự động qua VietQR Host2Host, SePay hoặc Casso được giữ tắt ch
 
 Email giao dịch hỗ trợ kênh API hoặc SMTP ở backend. Admin có thể chỉnh mẫu email trong Command Deck nhưng không được xem lại secret sau khi lưu. Khi chưa đủ secret, hệ thống giữ trạng thái không gửi thật. Trước production cần xác minh sender domain, SPF, DKIM, redirect URL và test mailbox thật.
 
-Các biến bí mật thường đặt trên server hosting gồm `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`, hoặc secret API của provider theo tài liệu tích hợp hiện tại. Tên biến thực tế phải khớp `server/_core/env.ts` và tài liệu provider; không tự đoán tên khi triển khai.
+Các biến bí mật thường đặt trên server hosting gồm `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `EMAIL_FROM_ADDRESS` hoặc `RESEND_API_KEY`. Tên biến chuẩn và placeholder đã được gom trong `.env.example`; không tự sửa source khi triển khai.
 
 ### 6.3 Ảnh, logo và storage
 
@@ -320,7 +322,7 @@ Admin đăng nhập `/admin.html`, kiểm tra **Tổng quan**, sau đó quản l
 | Lỗi | Nguyên nhân thường gặp | Cách xử lý |
 | --- | --- | --- |
 | `pnpm: command not found` | Chưa cài pnpm hoặc PATH chưa đúng. | Cài pnpm theo Node version manager của máy/hosting rồi mở terminal mới. |
-| Catalog không tải | Sai URL/key, schema chưa chạy hoặc RLS chặn. | Kiểm tra `client/supabase-config.js`, project Supabase và browser console. |
+| Catalog không tải | Sai URL/key, schema chưa chạy hoặc RLS chặn. | Kiểm tra `.env` với `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`, project Supabase và browser console. |
 | Không vào Admin | User chưa có `admin_users`/role phù hợp hoặc session cũ. | Cấp quyền bằng SQL/RPC an toàn, đăng xuất rồi đăng nhập lại. |
 | Đơn không tạo | Chưa đăng nhập, thiếu địa chỉ/số điện thoại, tồn kho thiếu hoặc RPC lỗi. | Kiểm tra từng điều kiện; không sửa giá trong browser. |
 | QR sai | Placeholder, bank ID/số tài khoản sai hoặc cấu hình chưa lưu. | Cập nhật cấu hình, test QR trước khi chạy thật. |

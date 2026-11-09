@@ -11,7 +11,7 @@ sidebar_position: 4
 
 ## Public config
 
-Chỉ publishable/anon key được phép ở client. Service role, secret key và database credential chỉ nằm ở server/host environment.
+Copy `.env.example` thành `.env`. Frontend dùng `VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY`; backend/payment dùng `SUPABASE_URL` và `SUPABASE_SERVICE_ROLE_KEY`. Chỉ publishable/anon key được phép ở client. Service role, secret key và database credential chỉ nằm ở server/host environment. Không sửa `client/supabase-config.js` và không đưa secret vào biến `VITE_*`.
 
 ## Storage
 

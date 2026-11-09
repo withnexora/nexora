@@ -47,6 +47,8 @@ services:
         sync: false
       - key: OWNER_OPEN_ID
         sync: false
+      - key: OWNER_NAME
+        sync: false
       - key: DATABASE_URL
         sync: false
       - key: BUILT_IN_FORGE_API_URL
@@ -58,4 +60,16 @@ services:
       - key: VITE_FRONTEND_FORGE_API_KEY
         sync: false
       - key: PUBLIC_APP_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM_ADDRESS
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USERNAME
+        sync: false
+      - key: SMTP_PASSWORD
         sync: false

@@ -42,14 +42,16 @@ GitHub Pages, Netlify, Vercel static, Cloudflare Pages, and cPanel static hostin
 ```bash
 git clone https://github.com/minhduc290613/tech-ecommerce-store.git
 cd tech-ecommerce-store
+cp .env.example .env
 pnpm install
 ```
 
-Configure `client/supabase-config.js` with your own public values:
+Configure `.env` (copied from `.env.example`) with your public values:
 
-```js
-export const SUPABASE_URL = "https://your-project-id.supabase.co";
-export const SUPABASE_ANON_KEY = "sb_publishable_your_public_key";
+```dotenv
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_your_public_key
+SUPABASE_URL=https://your-project-id.supabase.co
 ```
 
 Start development:
@@ -75,7 +77,7 @@ The project does not define a `pnpm preview` script. Use `pnpm start` to test th
 
 ## 5. Supabase setup
 
-Create a project at the [Supabase Dashboard](https://supabase.com/dashboard). From **Project Settings → API Keys**, copy the Project URL and Publishable key. Legacy anon keys may work for existing projects, but never put a secret/service-role key in `client/`. Public keys do not replace RLS; the database must still enforce authorization [1].
+Create a project at the [Supabase Dashboard](https://supabase.com/dashboard). From **Project Settings → API Keys**, copy the Project URL and Publishable key into `.env` as `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, and `SUPABASE_URL`. `client/supabase-config.js` reads these environment variables and no longer contains a repository fallback. Legacy anon keys may work for existing projects, but never put a secret/service-role key in `client/`. Public keys do not replace RLS; the database must still enforce authorization [1].
 
 Open **SQL Editor** and run the complete `supabase-unified.sql` once on a new or empty project. This canonical file contains the catalog, orders, order items, customer profiles, wallet ledger, address book, roles/capabilities, CMS, articles, moderation, affiliate, sale campaigns, logistics, after-sales, transactional email, customer notifications, and platform notifications.
 
@@ -227,7 +229,7 @@ Brand images, product galleries, OG images, article covers, and carrier logos ca
 | Symptom | Likely cause | Fix |
 | --- | --- | --- |
 | `pnpm` not found | pnpm is not installed or PATH is stale. | Install pnpm for the selected Node version and reopen the terminal. |
-| Catalog cannot load | Wrong project URL/key, missing schema, or RLS denial. | Check `client/supabase-config.js`, Supabase project, Network tab, and schema. |
+| Catalog cannot load | Wrong project URL/key, missing schema, or RLS denial. | Check `.env` values `VITE_SUPABASE_URL`/`VITE_SUPABASE_ANON_KEY`, Supabase project, Network tab, and schema. |
 | Admin access denied | User is not in `admin_users` or lacks the required role. | Grant access through the protected setup process and sign in again. |
 | Order creation fails | Missing auth, address, phone, stock, or RPC permission. | Check each condition; never trust browser price values. |
 | QR is incorrect | Placeholder or unsaved payment configuration. | Replace values and test the QR before opening sales. |

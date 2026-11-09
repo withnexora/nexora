@@ -46,9 +46,12 @@ The English Command Deck is a presentation layer over the same secure applicatio
 ```bash
 git clone https://github.com/<github-user>/<repository>.git
 cd <repository>
+cp .env.example .env
 pnpm install
 pnpm dev
 ```
+
+`.env.example` is the single configuration template for a clone. It groups the public Supabase URL/key, public site URL, backend secrets, PayOS, webhook providers, email, OAuth, and optional database variables. This repository already contains the active Supabase project values in `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`; replace those two values and `SUPABASE_URL` when connecting your own project. Do not edit `client/supabase-config.js`.
 
 Open `http://localhost:3000/`, `/admin-en.html`, `/orders.html`, or `/affiliate.html`. Before release, run:
 
@@ -63,16 +66,17 @@ The production static output is `dist/public`. The bundled Node server is `dist/
 
 ## Supabase configuration
 
-Create a Supabase project and set the Project URL and Publishable key in `client/supabase-config.js`:
+Create a Supabase project and set the Project URL and Publishable key in `.env` (copied from `.env.example`):
 
-```js
-export const SUPABASE_URL = "https://your-project-id.supabase.co";
-export const SUPABASE_ANON_KEY = "sb_publishable_your_public_key";
+```dotenv
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_your_public_key
+SUPABASE_URL=https://your-project-id.supabase.co
 ```
 
 Run the complete `supabase-unified.sql` once on a new or empty project. Do not rerun the complete schema on a production database with real orders without a backup and an approved migration plan. Enable Email authentication and add local, preview, and production URLs under Supabase Auth URL Configuration.
 
-A publishable/anon key may be visible in browser code when RLS is correctly configured. Never expose `service_role`, `sb_secret_...`, JWT secrets, SMTP passwords, payment API keys, webhook signing secrets, or customer exports. Secret values belong only in protected server/hosting environment variables.
+A publishable/anon key may be visible in browser code when RLS is correctly configured. Never expose `service_role`, `sb_secret_...`, JWT secrets, SMTP passwords, payment API keys, webhook signing secrets, or customer exports. Secret values belong only in protected server/hosting environment variables. Never put those values in a `VITE_*` variable.
 
 ## Deployment choices
 
@@ -101,12 +105,13 @@ client/
 ├── admin.js, admin-i18n.js             # shared admin logic and English presentation layer
 ├── orders.html, affiliate.html         # customer order and affiliate pages
 ├── info.html, article.html             # public content pages
-└── supabase-config.js                  # public URL + publishable key
+└── supabase-config.js                  # reads VITE_SUPABASE_* from .env
 
 docs/                                   # Vietnamese and English documentation
 supabase-unified.sql                    # canonical database/RLS/RPC schema
 vite.config.ts                          # Vite multi-page build
 package.json                            # development and release commands
+.env.example                            # single local/hosting environment template
 ```
 
 ## Official references

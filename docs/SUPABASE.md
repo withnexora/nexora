@@ -13,7 +13,7 @@ NEXORA sử dụng một schema canonical duy nhất: [`supabase-unified.sql`](.
 | 1 | Tạo/kết nối Supabase project trống. | Project ở trạng thái hoạt động. |
 | 2 | Áp dụng toàn bộ `supabase-unified.sql` như **một migration DDL**. | Tạo schema, function/RPC, index, RLS policy, Account Center, email/domain metadata không chứa secret, role/capability, moderation/affiliate/refund và seed. |
 | 3 | Bật Email/Password trong Authentication. | Storefront có thể tạo tài khoản/đăng nhập. |
-| 4 | Lấy Project URL và anon/publishable key, điền vào `client/supabase-config.js`. | Storefront và `/admin.html` cùng dùng một project. |
+| 4 | Copy `.env.example` thành `.env`, rồi đặt `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` và `SUPABASE_URL`. | Storefront và `/admin.html` cùng dùng một project; không sửa source config. |
 | 5 | Tạo user rồi cấp quyền trong `admin_users`. | User mở được Command Deck. |
 
 ### Cách áp dụng thủ công

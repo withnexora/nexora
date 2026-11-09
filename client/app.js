@@ -25,7 +25,7 @@ const UI_TRANSLATIONS = {
 
 // ============================================================================
 // 1) SUPABASE CONFIGURATION
-// Điền Project URL và anon public key tại supabase-config.js.
+// Cấu hình public Supabase được đọc từ VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY trong .env.
 // LƯU Ý: Không bao giờ đặt service_role key vào frontend.
 // ============================================================================
 
@@ -639,7 +639,7 @@ function setAuthMode(mode) {
 
 async function handleAuthSubmit(event) {
   event.preventDefault();
-  if (!db) { showToast("Hãy điền SUPABASE_URL và SUPABASE_ANON_KEY trong app.js trước khi dùng đăng nhập.", "error"); return; }
+  if (!db) { showToast("Hãy điền VITE_SUPABASE_URL và VITE_SUPABASE_ANON_KEY trong .env trước khi dùng đăng nhập.", "error"); return; }
   const email = els.authEmail.value.trim(); const password = els.authPassword.value; const recovery = state.authMode === "recovery";
   if ((!recovery && !email) || (state.authMode !== "forgot" && password.length < (recovery ? 8 : 6))) { showToast(state.authMode === "forgot" ? "Vui lòng nhập email hợp lệ." : recovery ? "Mật khẩu mới cần ít nhất 8 ký tự." : "Vui lòng nhập email hợp lệ và mật khẩu từ 6 ký tự.", "error"); return; }
   if (recovery && password !== els.authPasswordConfirm.value) { showToast("Hai mật khẩu mới chưa khớp.", "error"); return; }

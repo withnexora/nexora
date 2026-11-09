@@ -16,10 +16,11 @@ Node.js 20+, pnpm, Git, and a Supabase project. Never commit `.env`, service-rol
 ```bash
 git clone https://github.com/minhduc290613/tech-ecommerce-store.git
 cd tech-ecommerce-store
+cp .env.example .env
 pnpm install
 ```
 
-Set the project URL and publishable/anon key in `client/supabase-config.js`, then run `supabase-unified.sql` against a new or empty database.
+All clone-time configuration is collected in `.env.example`; copy it to `.env` and edit the relevant values. The frontend reads `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`; backend/payment routes read `SUPABASE_URL` and server-only secrets. Do not edit `client/supabase-config.js` or commit `.env`. Then run `supabase-unified.sql` against a new or empty database.
 
 ```bash
 pnpm dev

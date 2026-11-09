@@ -41,10 +41,15 @@ Account Admin DEMO: Không Cho
 git clone https://github.com/minhduc290613/tech-ecommerce-store.git
 cd tech-ecommerce-store
 
+# Tạo file cấu hình local duy nhất từ mẫu đã chuẩn bị
+cp .env.example .env
+
 # Install and run locally
 pnpm install
 pnpm dev
 ```
+
+`.env.example` là nơi tập trung các biến cần thay khi clone repository: URL/key public của Supabase, URL public, secret backend, PayOS, webhook, email, OAuth và tùy chọn database. Với bản clone này, `VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY` đã trỏ tới project Supabase đang hoạt động; nếu dùng project riêng, chỉ cần thay hai dòng đó cùng `SUPABASE_URL`. Không sửa `client/supabase-config.js` nữa.
 
 Mở `http://localhost:3000/`. Các entrypoint chính là `/admin.html` (Vietnamese Admin), `/admin-en.html` (English Admin), `/admin-mantis.html` (Mantis Admin variant), `/orders.html`, `/affiliate.html`, `/info.html` và `/article.html`. Trước khi phát hành, chạy:
 
@@ -68,7 +73,7 @@ Bản static nằm tại `dist/public`; server bundle nằm tại `dist/index.js
 
 ## Bảo mật tối thiểu
 
-Chỉ đặt Project URL và publishable/anon key trong `client/supabase-config.js`. Không commit `service_role`, `sb_secret_...`, `JWT_SECRET`, SMTP password, API key thanh toán, webhook signing secret, database export chứa PII hoặc thông tin tài khoản nhận tiền thật. Bật RLS, dùng HTTPS, MFA cho Admin và rotate secret ngay khi nghi ngờ bị lộ.
+Chỉ đặt Project URL và publishable/anon key trong `.env` dưới tên `VITE_SUPABASE_URL` và `VITE_SUPABASE_ANON_KEY`. Không commit file `.env`. Không đưa `SUPABASE_SERVICE_ROLE_KEY`, `sb_secret_...`, `JWT_SECRET`, SMTP password, API key thanh toán, webhook signing secret, database export chứa PII hoặc thông tin tài khoản nhận tiền thật vào biến `VITE_*`; Vite sẽ đưa `VITE_*` vào bundle trình duyệt. Bật RLS, dùng HTTPS, MFA cho Admin và rotate secret ngay khi nghi ngờ bị lộ.
 
 > **Schema canonical:** toàn bộ database được quản lý trong `supabase-unified.sql`. Trên project Supabase mới/trống, chạy file này một lần. Với database đã có dữ liệu production, hãy backup và tạo migration có kiểm soát; không chạy lại toàn bộ schema một cách mù quáng.
 
@@ -83,12 +88,13 @@ client/
 ├── orders.html, orders.js              # đơn hàng khách
 ├── affiliate.html, affiliate.js        # affiliate dashboard
 ├── info.html, article.html             # nội dung public
-└── supabase-config.js                  # public URL + publishable key
+└── supabase-config.js                  # đọc VITE_SUPABASE_* từ .env
 
 docs/                                   # tài liệu Việt/Anh và vận hành
 supabase-unified.sql                    # database/RLS/RPC canonical
 vite.config.ts                          # Vite multipage build
 package.json                            # commands
+.env.example                            # mẫu cấu hình duy nhất cho local/hosting
 ```
 
 Xem hướng dẫn đầy đủ trong [docs/HUONG_DAN_A_Z.md](docs/HUONG_DAN_A_Z.md) hoặc [docs/DEPLOYMENT_GUIDE_EN.md](docs/DEPLOYMENT_GUIDE_EN.md).
